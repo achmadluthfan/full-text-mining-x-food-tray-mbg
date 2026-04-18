@@ -1,0 +1,91 @@
+# Definisi tema isu desain food tray MBG
+#
+# - THEME_RULES: keyword anchor (dipakai sebagai hint ke LLM + fallback
+#   mapping saat LLM gagal)
+# - THEME_DEFINITIONS: deskripsi naratif — DIKIRIM ke LLM sebagai
+#   grounding agar mapping konsisten
+# - THEME_TO_NEED: template fallback kalau LLM need-statement error.
+#   LLM utama WAJIB menyusun versi kontekstualnya sendiri di
+#   prompts/04_need_statement.md
+
+THEME_RULES:
+  retensi_suhu:
+    - dingin
+    - panas
+    - hangat
+    - suhu
+    - cepat basi
+    - basi
+    - hangat
+  kebocoran_tumpah:
+    - tumpah
+    - bocor
+    - kuah
+    - tidak rapat
+    - ga rapat
+    - nggak rapat
+    - tutup
+    - rapat
+  material_keamanan:
+    - stainless
+    - ss 304
+    - food grade
+    - bahan
+    - karat
+    - plastik
+  higienitas:
+    - higienis
+    - sanitasi
+    - kotor
+    - bersih
+    - kontaminasi
+    - cuci
+  handling_stackability:
+    - ikat
+    - rafia
+    - tumpuk
+    - handling
+    - angkut
+    - stabil
+    - jatuh
+  ergonomi_penggunaan:
+    - berat
+    - susah
+    - ribet
+    - nyaman
+    - mudah dibawa
+    - pegang
+
+# Definisi naratif yang dikirim ke LLM sebagai context
+THEME_DEFINITIONS:
+  retensi_suhu: >
+    Masalah terkait kemampuan tray mempertahankan suhu makanan
+    (panas/hangat/dingin) selama distribusi. Contoh: makanan cepat
+    dingin, basi sebelum sampai, suhu tidak merata.
+  kebocoran_tumpah: >
+    Masalah terkait kebocoran kuah, tumpahan, atau tutup yang tidak
+    rapat selama pengangkutan. Contoh: kuah merembes, tutup kebuka,
+    lauk tercampur.
+  material_keamanan: >
+    Masalah terkait material tray (aman pangan, ketahanan, karat,
+    kelayakan food grade). Contoh: keraguan stainless 201 vs 304,
+    plastik tidak food grade, karatan.
+  higienitas: >
+    Masalah terkait kebersihan, sanitasi, potensi kontaminasi selama
+    handling dan distribusi. Contoh: tray kotor, sulit dibersihkan,
+    kontaminasi silang.
+  handling_stackability: >
+    Masalah terkait kemudahan menumpuk, ikat, angkut, stabilitas saat
+    dibawa bertumpuk. Contoh: diikat rafia karena tidak stackable,
+    tumpukan jatuh, tidak muat di motor.
+  ergonomi_penggunaan: >
+    Masalah terkait kenyamanan & kemudahan bagi petugas/siswa:
+    berat, susah dibuka, ribet dicuci, tidak nyaman dipegang.
+
+THEME_TO_NEED:
+  retensi_suhu: "Food tray harus mampu memperlambat penurunan suhu makanan selama distribusi."
+  kebocoran_tumpah: "Food tray harus mampu meminimalkan risiko kebocoran dan tumpahan selama pengangkutan dan distribusi."
+  material_keamanan: "Food tray harus menggunakan material yang aman pangan, mudah dibersihkan, dan sesuai dengan kebutuhan distribusi MBG."
+  higienitas: "Food tray harus mendukung higienitas dan meminimalkan potensi kontaminasi selama penanganan dan distribusi."
+  handling_stackability: "Food tray harus mudah ditumpuk, stabil saat dibawa, dan mendukung handling distribusi yang lebih aman."
+  ergonomi_penggunaan: "Food tray harus mudah digunakan, tidak terlalu berat, dan mendukung kemudahan operasional bagi petugas distribusi."

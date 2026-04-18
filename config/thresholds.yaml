@@ -1,0 +1,53 @@
+# Threshold numerik & parameter batch — di-tune tanpa sentuh WORKFLOW.md
+
+# Engagement filter (Step 4)
+min_likes: 0
+min_replies: 0
+min_reposts: 0
+
+# Relevance filter (Step 6)
+# Skor gabungan 3*tray_hit + 3*mbg_hit + 1*issue_hit (fallback keyword).
+# LLM return skor 0-10; post dengan score >= relevance_score_min lolos.
+relevance_score_min: 3
+llm_relevance_score_min: 5   # ambang untuk skor LLM (0-10)
+
+# Fetching (Step 3)
+max_pages_per_query: 8
+fast_mode_limit: 300
+country_default: null        # isi "id" jika mau filter country xpoz (hati-hati: dapat mengurangi hit)
+
+# Time window — FIXED RANGE (bukan rolling)
+# Data yang dibutuhkan: Agustus 2025 – Oktober 2025
+# Format YYYY-MM-DD, inklusif di kedua sisi.
+# Catatan xpoz: 60 hari adalah default rolling jika tidak di-set. Untuk
+# range historis eksplisit, parameter startDate/endDate wajib diisi
+# (lihat WORKFLOW.md Step 3). xpoz mengindeks >1.5B post historis,
+# jadi range 3 bulan di 2025 didukung.
+date_window:
+  start: "2025-08-01"
+  end:   "2025-10-31"
+
+# LLM batching (Step 6-8, 10)
+llm_batch_size: 20           # jumlah post per call LLM
+llm_max_retries: 2
+llm_timeout_sec: 45
+
+# Representative posts (Step 9)
+rep_top_n_per_theme: 5
+
+# Top words (Step 9)
+top_words_n: 50
+min_word_len: 3
+
+# Safety gate
+min_relevant_rows_for_report: 10   # di bawah ini, report.md akan warn "sampel terlalu kecil"
+
+# Dry-run gate (lihat DRYRUN.md)
+dryrun:
+  min_volume_per_pack: 15          # di bawah ini ditandai "thin"
+  abort_if_total_below: 30         # di bawah total ini, dry-run abort full run
+  large_pack_threshold: 5000       # di atas ini, pack WAJIB responseType="csv"
+  auto_run_before_full: true       # agent otomatis jalankan dry-run di Step 0
+
+# LLM model (untuk run_meta)
+llm_model_name: "claude-opus-4.7"   # ganti sesuai agent yg mengeksekusi

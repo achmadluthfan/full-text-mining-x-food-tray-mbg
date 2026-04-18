@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mbg/schemas/theme_summary.schema.json",
+  "title": "ThemeSummary + NeedStatement",
+  "description": "Gabungan kontrak untuk outputs/05_theme_summary.csv dan outputs/08_need_statements.csv. Kedua file berbagi kunci `theme`.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/definitions/ThemeSummaryRow" },
+    { "$ref": "#/definitions/NeedStatementRow" }
+  ],
+  "definitions": {
+    "ThemeEnum": {
+      "type": "string",
+      "enum": [
+        "retensi_suhu",
+        "kebocoran_tumpah",
+        "material_keamanan",
+        "higienitas",
+        "handling_stackability",
+        "ergonomi_penggunaan"
+      ]
+    },
+    "ThemeSummaryRow": {
+      "type": "object",
+      "required": ["theme", "count"],
+      "properties": {
+        "theme": { "$ref": "#/definitions/ThemeEnum" },
+        "count": { "type": "integer", "minimum": 0 },
+        "pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "count / total_coded * 100, 2 desimal."
+        }
+      },
+      "additionalProperties": false
+    },
+    "NeedStatementRow": {
+      "type": "object",
+      "required": [
+        "theme",
+        "frequency",
+        "need_statement",
+        "justification",
+        "design_attributes",
+        "priority"
+      ],
+      "properties": {
+        "theme": { "$ref": "#/definitions/ThemeEnum" },
+        "frequency": { "type": "integer", "minimum": 0 },
+        "need_statement": {
+          "type": "string",
+          "pattern": "^Food tray (harus|perlu) .+"
+        },
+        "justification": {
+          "type": "string",
+          "minLength": 40
+        },
+        "design_attributes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 6,
+          "items": { "type": "string" },
+          "description": "Serialisasi ke CSV sebagai JSON string."
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["tinggi", "sedang", "rendah"]
+        },
+        "method": {
+          "type": "string",
+          "enum": ["llm", "template_fallback"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

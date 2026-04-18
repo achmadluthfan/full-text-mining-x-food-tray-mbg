@@ -1,0 +1,153 @@
+# Kamus keyword untuk langkah deterministik & fallback
+# (dipakai saat LLM error atau sebagai double-check keyword-based)
+
+TRAY_TERMS:
+  - food tray
+  - tray
+  - ompreng
+  - wadah
+  - tempat makan
+  - alat makan
+  - nampan
+
+MBG_TERMS:
+  - mbg
+  - makan bergizi gratis
+  - sppg
+  - satuan pelayanan pemenuhan gizi
+
+ISSUE_TERMS:
+  # suhu
+  - dingin
+  - panas
+  - hangat
+  - suhu
+  - basi
+  - cepat basi
+  # kebocoran
+  - tumpah
+  - bocor
+  - tutup
+  - rapat
+  - kuah
+  # material
+  - stainless
+  - ss 304
+  - food grade
+  - bahan
+  - karat
+  # higiene
+  - higienis
+  - sanitasi
+  - kontaminasi
+  - bersih
+  - kotor
+  # distribusi
+  - ikat
+  - rafia
+  - tumpuk
+  - handling
+  - distribusi
+  - angkut
+
+# Lexicon fallback sentimen (kalau LLM gagal parse)
+POSITIVE_WORDS:
+  - bagus
+  - baik
+  - aman
+  - rapi
+  - kuat
+  - bersih
+  - higienis
+  - sesuai
+  - mantap
+  - oke
+  - keren
+  - nyaman
+  - memuaskan
+
+NEGATIVE_WORDS:
+  - dingin
+  - basi
+  - tumpah
+  - bocor
+  - kotor
+  - kurang
+  - buruk
+  - karat
+  - tidak rapat
+  - ga rapat
+  - nggak rapat
+  - rusak
+  - berat
+  - susah
+  - ribet
+  - takut
+  - bahaya
+  - kontaminasi
+  - jelek
+  - tipis
+  - kendala
+  - masalah
+  - parah
+  - amburadul
+
+# Stopwords untuk top_words (Indonesia + English minor + domain-noise)
+STOPWORDS:
+  # id function words
+  - dan
+  - di
+  - yang
+  - untuk
+  - ke
+  - dari
+  - ini
+  - itu
+  - pada
+  - dengan
+  - atau
+  - karena
+  - jadi
+  - aja
+  - saja
+  - juga
+  - ga
+  - gak
+  - nggak
+  - nya
+  - ya
+  - kok
+  - nih
+  - sih
+  - mah
+  - kalo
+  - kalau
+  - udah
+  - sudah
+  - belum
+  - lagi
+  - kan
+  - dong
+  - deh
+  - biar
+  - supaya
+  - kayak
+  - kaya
+  # en
+  - the
+  - a
+  - an
+  - is
+  - are
+  - to
+  - of
+  - in
+  - for
+  - on
+  - at
+  - be
+  - as
+  - it
+  # domain noise (agar tidak mendominasi ranking)
+  - mbg
+  - sppg

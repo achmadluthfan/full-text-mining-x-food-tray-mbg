@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mbg/schemas/coded_post.schema.json",
+  "title": "CodedPost",
+  "description": "Baris final di outputs/04_coded.csv — 1 row per post yang lolos relevansi & memiliki minimal 1 tema.",
+  "type": "object",
+  "required": [
+    "tweet_id",
+    "created_at",
+    "author_username",
+    "text_raw",
+    "text_clean",
+    "relevance_score",
+    "sentiment_label",
+    "sentiment_score",
+    "themes",
+    "tweet_url"
+  ],
+  "properties": {
+    "tweet_id": { "type": "string", "description": "ID unik post (dari xpoz field `id`)." },
+    "conversation_id": { "type": ["string", "null"] },
+    "created_at": { "type": "string", "description": "ISO 8601 UTC." },
+    "author_id": { "type": ["string", "null"] },
+    "author_username": { "type": "string" },
+    "lang": { "type": "string", "default": "id" },
+    "text_raw": { "type": "string", "description": "Teks asli dari xpoz." },
+    "text_clean": { "type": "string", "description": "Hasil clean_text() regex." },
+    "like_count": { "type": "integer", "minimum": 0 },
+    "reply_count": { "type": "integer", "minimum": 0 },
+    "repost_count": { "type": "integer", "minimum": 0 },
+    "quote_count": { "type": "integer", "minimum": 0 },
+    "bookmark_count": { "type": "integer", "minimum": 0 },
+    "impression_count": { "type": ["integer", "null"], "minimum": 0 },
+    "query_used": { "type": "string" },
+    "query_label": {
+      "type": "string",
+      "enum": [
+        "umum_tray_mbg",
+        "isu_suhu",
+        "isu_tumpah_tutup",
+        "isu_material",
+        "isu_distribusi",
+        "isu_higiene"
+      ]
+    },
+    "tweet_url": { "type": "string", "format": "uri" },
+
+    "relevance_score": { "type": "integer", "minimum": 0, "maximum": 10 },
+    "relevance_reason": { "type": "string" },
+    "relevance_method": {
+      "type": "string",
+      "enum": ["llm", "keyword_fallback"]
+    },
+
+    "sentiment_label": {
+      "type": "string",
+      "enum": ["sangat_positif", "positif", "netral", "negatif", "sangat_negatif"]
+    },
+    "sentiment_score": {
+      "type": "integer",
+      "enum": [-2, -1, 0, 1, 2]
+    },
+    "sentiment_rationale": { "type": "string" },
+    "sentiment_method": {
+      "type": "string",
+      "enum": ["llm", "lexicon_fallback"]
+    },
+
+    "themes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "retensi_suhu",
+          "kebocoran_tumpah",
+          "material_keamanan",
+          "higienitas",
+          "handling_stackability",
+          "ergonomi_penggunaan"
+        ]
+      },
+      "description": "Multi-label. Saat diserialisasi ke CSV, simpan sebagai JSON string."
+    },
+    "themes_rationale": { "type": "string" },
+    "themes_method": {
+      "type": "string",
+      "enum": ["llm", "keyword_fallback"]
+    }
+  },
+  "additionalProperties": false
+}
