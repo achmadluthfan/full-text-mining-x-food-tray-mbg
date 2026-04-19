@@ -1,0 +1,49 @@
+{
+  "run_id": "883a71c5-d986-4477-a222-7c588d2d16eb",
+  "timestamp_utc": "2026-04-17T16:25:56Z",
+  "window": {
+    "start": "2025-08-01",
+    "end": "2025-10-31"
+  },
+  "query_packs": [
+    "umum_tray_mbg",
+    "isu_suhu",
+    "isu_tumpah_tutup",
+    "isu_material",
+    "isu_distribusi",
+    "isu_higiene"
+  ],
+  "total_raw": 94,
+  "total_cleaned": 93,
+  "total_relevant": 82,
+  "total_coded": 79,
+  "total_out_of_window_dropped": 1,
+  "llm_model": "claude-opus-4.7",
+  "config_hash": "144c95931fe3e84a",
+  "theme_distribution": {
+    "handling_stackability": 9,
+    "material_keamanan": 47,
+    "ergonomi_penggunaan": 6,
+    "higienitas": 32,
+    "retensi_suhu": 10,
+    "kebocoran_tumpah": 6
+  },
+  "sentiment_distribution": {
+    "negatif": 33,
+    "netral": 13,
+    "sangat_negatif": 23,
+    "positif": 10
+  },
+  "xpoz_calls": [
+    {
+      "tool": "countTweets",
+      "count": 6
+    },
+    {
+      "tool": "getTwitterPostsByKeywords",
+      "count": 6,
+      "response_type": "fast",
+      "async_polling": false
+    }
+  ]
+}

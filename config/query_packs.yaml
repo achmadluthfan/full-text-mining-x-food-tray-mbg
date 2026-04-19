@@ -1,25 +1,40 @@
-# Query cluster untuk xpoz getTwitterPostsByKeywords
+# Query packs untuk WORKFLOW_bertopic.md (2 corpus paralel)
 #
-# Catatan sintaks xpoz (beda dari X API v2):
-#   - AND / OR / NOT wajib EKSPLISIT (spasi = OR implicit, TAPI jangan
-#     diandalkan — selalu tulis operator)
+# Sintaks xpoz:
+#   - AND / OR / NOT wajib EKSPLISIT
 #   - Tanda kutip untuk exact phrase: "food tray MBG"
 #   - Parentheses untuk grouping
-#   - JANGAN pakai from: / lang: / is:retweet di dalam query
-#     -> pakai parameter authorUsername / language / filterOutRetweets
+#   - JANGAN pakai from: / lang: / -is:retweet di dalam query string
+#     -> pakai parameter language="id" / filterOutRetweets=true
 #
 # Semua pack difilter via parameter:
 #   language: "id"
 #   filterOutRetweets: true
+#
+# OBJECT_BASE direkat di Python untuk pack `tray` (lihat scripts/run_pipeline.py)
 
-umum_tray_mbg: '("food tray MBG" OR "tray MBG" OR "wadah MBG" OR "tempat makan MBG" OR "ompreng MBG")'
+# ===========================================================================
+# Corpus A — MBG umum (issue ranking food tray vs isu MBG lain)
+# ===========================================================================
+general:
+  mbg_umum_phrase:  '"makan bergizi gratis"'
+  mbg_umum_short:   'MBG'
+  mbg_umum_context: '(MBG OR "makan bergizi gratis" OR SPPG OR "program makan bergizi gratis")'
 
-isu_suhu: '(("food tray MBG" OR "tray MBG" OR "ompreng MBG" OR "wadah MBG") AND (dingin OR panas OR hangat OR suhu OR basi OR "cepat basi"))'
-
-isu_tumpah_tutup: '(("food tray MBG" OR "tray MBG" OR "ompreng MBG" OR "wadah MBG") AND (tumpah OR bocor OR tutup OR rapat OR kuah))'
-
-isu_material: '(("food tray MBG" OR "tray MBG" OR "ompreng MBG") AND (stainless OR "ss 304" OR "food grade" OR bahan OR karat))'
-
-isu_distribusi: '(("food tray MBG" OR "tray MBG" OR "ompreng MBG") AND (distribusi OR angkut OR ikat OR rafia OR tumpuk OR handling))'
-
-isu_higiene: '(("food tray MBG" OR "tray MBG" OR "ompreng MBG") AND (higienis OR sanitasi OR bersih OR kotor OR kontaminasi))'
+# ===========================================================================
+# Corpus B — Food Tray MBG (BERTopic, sentiment, n-gram, co-occurrence)
+# ===========================================================================
+# OBJECT_BASE = (
+#   ("food tray MBG" OR "tray MBG" OR "wadah MBG" OR "tempat makan MBG" OR "ompreng MBG")
+#   OR (ompreng AND (MBG OR "makan bergizi gratis"))
+#   OR ("food tray" AND (MBG OR "makan bergizi gratis"))
+#   OR (wadah AND (MBG OR "makan bergizi gratis"))
+#   OR (tray AND (MBG OR "makan bergizi gratis"))
+# )
+tray:
+  tray_umum_objek:    '<OBJECT_BASE>'
+  tray_suhu_basi:     '<OBJECT_BASE> AND (dingin OR panas OR hangat OR suhu OR basi OR "cepat basi")'
+  tray_tumpah_tutup:  '<OBJECT_BASE> AND (tumpah OR bocor OR tutup OR rapat OR kuah)'
+  tray_material:      '<OBJECT_BASE> AND (stainless OR "ss 304" OR "food grade" OR karat OR "anti karat" OR bahan)'
+  tray_distribusi:    '<OBJECT_BASE> AND (distribusi OR angkut OR ikat OR diikat OR rafia OR rapia OR tali OR tumpuk OR handling)'
+  tray_higienitas:    '<OBJECT_BASE> AND (higienis OR sanitasi OR bersih OR kotor OR kontaminasi OR cuci OR kering)'

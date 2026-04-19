@@ -1,0 +1,30 @@
+# Rule-based draft need statement berdasarkan keyword di topic BERTopic.
+# Mengganti theme_rules.yaml lama (yang LLM-based).
+#
+# Logic (Step 13 di WORKFLOW_bertopic.md):
+#   1. BERTopic kasih topic_id + 10 keyword teratas per topic
+#   2. Cek keyword pertama yang match (urutan list ini = priority)
+#   3. Kalau tidak ada match -> DEFAULT_NEED_STATEMENT
+
+NEED_TEMPLATES:
+  - id: retensi_suhu
+    keywords: [dingin, hangat, suhu, basi]
+    statement: "Food tray harus mampu memperlambat penurunan suhu makanan selama distribusi."
+
+  - id: kebocoran_tumpah
+    keywords: [tumpah, bocor, tutup, rapat, kuah]
+    statement: "Food tray harus mampu meminimalkan risiko kebocoran dan tumpahan selama pengangkutan dan distribusi."
+
+  - id: material_keamanan
+    keywords: [stainless, food, karat, bahan]
+    statement: "Food tray harus menggunakan material yang aman pangan, tahan korosi, dan sesuai untuk distribusi MBG."
+
+  - id: higienitas
+    keywords: [higien, sanitasi, bersih, kotor, kontaminasi, cuci]
+    statement: "Food tray harus mudah dibersihkan dan mendukung higienitas selama penanganan dan distribusi."
+
+  - id: handling_distribusi
+    keywords: [distribusi, angkut, rafia, rapia, ikat, handling, tumpuk]
+    statement: "Food tray harus stabil saat dibawa, mudah ditumpuk, dan mendukung handling distribusi yang aman."
+
+DEFAULT_NEED_STATEMENT: "Food tray harus dirancang agar lebih sesuai dengan kebutuhan distribusi MBG di lapangan."

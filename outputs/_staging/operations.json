@@ -1,0 +1,15 @@
+{
+  "general": {
+    "mbg_umum_phrase":  "op_datadump_1776560917152_2dbce8",
+    "mbg_umum_short":   "op_datadump_1776560956381_e27c7f",
+    "mbg_umum_context": "op_datadump_1776560962164_deea25"
+  },
+  "tray": {
+    "tray_umum_objek":   "op_datadump_1776560968799_f4183d",
+    "tray_suhu_basi":    "op_datadump_1776560975102_51fa06",
+    "tray_tumpah_tutup": "op_datadump_1776560981114_4e35f1",
+    "tray_material":     "op_datadump_1776560987718_a0ce7a",
+    "tray_distribusi":   "op_datadump_1776560993984_2598b2",
+    "tray_higienitas":   "op_datadump_1776561000470_38997d"
+  }
+}

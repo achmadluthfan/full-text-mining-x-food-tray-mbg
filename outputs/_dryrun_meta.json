@@ -1,53 +1,28 @@
 {
-  "timestamp_utc": "2026-04-17T16:00:00Z",
-  "window": {
-    "start": "2025-08-01",
-    "end": "2025-10-31"
-  },
-  "volumes": {
-    "umum_tray_mbg": 49,
-    "isu_suhu": 2,
-    "isu_tumpah_tutup": 0,
-    "isu_material": 27,
-    "isu_distribusi": 0,
-    "isu_higiene": 2
-  },
-  "status_per_pack": {
-    "umum_tray_mbg": "ok",
-    "isu_suhu": "thin",
-    "isu_tumpah_tutup": "empty",
-    "isu_material": "ok",
-    "isu_distribusi": "empty",
-    "isu_higiene": "thin"
-  },
-  "total_volume": 80,
-  "estimated_unique_after_dedupe": 50,
-  "thresholds_used": {
-    "min_volume_per_pack": 15,
-    "abort_if_total_below": 30,
-    "large_pack_threshold": 5000
-  },
+  "run_timestamp": "2026-04-19",
+  "window": {"start": "2025-08-01", "end": "2025-10-31"},
   "decision": "proceed",
-  "decision_confidence": "caution",
-  "abort_reason": null,
-  "next_action": "run_full_workflow_with_revisions",
-  "recommended_packs_for_full_run": [
-    "umum_tray_mbg",
-    "isu_material"
-  ],
-  "packs_to_skip": [
-    "isu_suhu",
-    "isu_tumpah_tutup",
-    "isu_distribusi",
-    "isu_higiene"
-  ],
-  "estimated_full_run_cost": {
-    "xpoz_fetch_calls": 2,
-    "xpoz_count_calls_done": 6,
-    "estimated_llm_batches_total": 9,
-    "response_mode": "all_fast",
-    "async_polling_required": false
+  "abort_threshold": 30,
+  "thin_threshold": 15,
+  "volumes": {
+    "general": {
+      "mbg_umum_phrase":  {"count": 263,  "mode": "fast", "status": "ok"},
+      "mbg_umum_short":   {"count": 4996, "mode": "csv",  "status": "ok"},
+      "mbg_umum_context": {"count": 5194, "mode": "csv",  "status": "ok"}
+    },
+    "tray": {
+      "tray_umum_objek":   {"count": 227, "mode": "fast", "status": "ok"},
+      "tray_suhu_basi":    {"count": 14,  "mode": "fast", "status": "thin"},
+      "tray_tumpah_tutup": {"count": 8,   "mode": "fast", "status": "thin"},
+      "tray_material":     {"count": 82,  "mode": "fast", "status": "ok"},
+      "tray_distribusi":   {"count": 7,   "mode": "fast", "status": "thin"},
+      "tray_higienitas":   {"count": 47,  "mode": "fast", "status": "ok"}
+    }
   },
-  "errors": [],
-  "timeouts": []
+  "totals": {
+    "general_gross": 10453,
+    "tray_gross": 385,
+    "tray_unique_estimate": 230
+  },
+  "skipped_packs": []
 }

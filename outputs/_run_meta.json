@@ -1,49 +1,96 @@
 {
-  "run_id": "883a71c5-d986-4477-a222-7c588d2d16eb",
-  "timestamp_utc": "2026-04-17T16:25:56Z",
+  "run_id": "6d165cb2-7e2e-4462-8de0-f8d5c8a77e7d",
+  "timestamp_utc": "2026-04-19T01:20:06.556958+00:00",
+  "config_hash": "085dbfffaa878dcc",
   "window": {
     "start": "2025-08-01",
     "end": "2025-10-31"
   },
-  "query_packs": [
-    "umum_tray_mbg",
-    "isu_suhu",
-    "isu_tumpah_tutup",
-    "isu_material",
-    "isu_distribusi",
-    "isu_higiene"
+  "query_packs": {
+    "general": [
+      "mbg_umum_phrase",
+      "mbg_umum_short",
+      "mbg_umum_context"
+    ],
+    "tray": [
+      "tray_umum_objek",
+      "tray_suhu_basi",
+      "tray_tumpah_tutup",
+      "tray_material",
+      "tray_distribusi",
+      "tray_higienitas"
+    ]
+  },
+  "volumes": {
+    "general_raw": 1649,
+    "general_preprocessed": 1634,
+    "tray_raw": 122,
+    "tray_preprocessed": 121
+  },
+  "issue_ranking": [
+    {
+      "rank": 1,
+      "issue": "menu_gizi",
+      "tweet_count": 324,
+      "share_of_issue_coded_tweets_pct": 70.43
+    },
+    {
+      "rank": 2,
+      "issue": "kondisi_dapur_spgg",
+      "tweet_count": 99,
+      "share_of_issue_coded_tweets_pct": 21.52
+    },
+    {
+      "rank": 3,
+      "issue": "regulasi_kebijakan",
+      "tweet_count": 72,
+      "share_of_issue_coded_tweets_pct": 15.65
+    },
+    {
+      "rank": 4,
+      "issue": "food_tray_ompreng",
+      "tweet_count": 35,
+      "share_of_issue_coded_tweets_pct": 7.61
+    },
+    {
+      "rank": 5,
+      "issue": "distribusi_logistik",
+      "tweet_count": 26,
+      "share_of_issue_coded_tweets_pct": 5.65
+    }
   ],
-  "total_raw": 94,
-  "total_cleaned": 93,
-  "total_relevant": 82,
-  "total_coded": 79,
-  "total_out_of_window_dropped": 1,
-  "llm_model": "claude-opus-4.7",
-  "config_hash": "144c95931fe3e84a",
-  "theme_distribution": {
-    "handling_stackability": 9,
-    "material_keamanan": 47,
-    "ergonomi_penggunaan": 6,
-    "higienitas": 32,
-    "retensi_suhu": 10,
-    "kebocoran_tumpah": 6
+  "sentiment_distribution": [
+    {
+      "sentiment": "netral",
+      "count": 57
+    },
+    {
+      "sentiment": "negatif",
+      "count": 38
+    },
+    {
+      "sentiment": "positif",
+      "count": 26
+    }
+  ],
+  "bertopic": {
+    "language": "multilingual",
+    "min_topic_size": 8,
+    "n_topics_discovered": 3,
+    "ran": true,
+    "skip_reason": null
   },
-  "sentiment_distribution": {
-    "negatif": 33,
-    "netral": 13,
-    "sangat_negatif": 23,
-    "positif": 10
-  },
+  "skipped_packs": [],
   "xpoz_calls": [
     {
       "tool": "countTweets",
-      "count": 6
+      "count": 9
     },
     {
       "tool": "getTwitterPostsByKeywords",
-      "count": 6,
-      "response_type": "fast",
-      "async_polling": false
+      "count": 9,
+      "response_type": "csv+fast",
+      "async_polling": true
     }
   ]
 }

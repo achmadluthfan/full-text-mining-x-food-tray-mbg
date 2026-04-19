@@ -1,53 +1,80 @@
-# Threshold numerik & parameter batch — di-tune tanpa sentuh WORKFLOW.md
-
-# Engagement filter (Step 4)
-min_likes: 0
-min_replies: 0
-min_reposts: 0
-
-# Relevance filter (Step 6)
-# Skor gabungan 3*tray_hit + 3*mbg_hit + 1*issue_hit (fallback keyword).
-# LLM return skor 0-10; post dengan score >= relevance_score_min lolos.
-relevance_score_min: 3
-llm_relevance_score_min: 5   # ambang untuk skor LLM (0-10)
-
-# Fetching (Step 3)
-max_pages_per_query: 8
-fast_mode_limit: 300
-country_default: null        # isi "id" jika mau filter country xpoz (hati-hati: dapat mengurangi hit)
+# Threshold numerik & parameter — di-tune tanpa sentuh WORKFLOW_bertopic.md
+# Workflow BERTopic: tidak ada parameter LLM, semua deterministik.
 
 # Time window — FIXED RANGE (bukan rolling)
 # Data yang dibutuhkan: Agustus 2025 – Oktober 2025
-# Format YYYY-MM-DD, inklusif di kedua sisi.
-# Catatan xpoz: 60 hari adalah default rolling jika tidak di-set. Untuk
-# range historis eksplisit, parameter startDate/endDate wajib diisi
-# (lihat WORKFLOW.md Step 3). xpoz mengindeks >1.5B post historis,
-# jadi range 3 bulan di 2025 didukung.
 date_window:
   start: "2025-08-01"
   end:   "2025-10-31"
 
-# LLM batching (Step 6-8, 10)
-llm_batch_size: 20           # jumlah post per call LLM
-llm_max_retries: 2
-llm_timeout_sec: 45
+# Fetching xpoz (Step 3-4)
+fetching:
+  fast_mode_limit: 300         # responseType=fast cap
+  csv_threshold: 300           # > limit -> responseType=csv
+  csv_poll_interval_sec: 5
+  csv_max_poll_iter: 12        # 60s timeout
+  language: "id"
+  filter_out_retweets: true
 
-# Representative posts (Step 9)
-rep_top_n_per_theme: 5
+# Preprocessing (Step 5)
+preprocess:
+  min_token_len: 3             # token < 3 char dibuang
+  drop_empty_after_clean: true # row dengan text_joined kosong dibuang
+  dedupe_by_text_joined: true  # near-duplicate dedupe setelah stem
 
-# Top words (Step 9)
-top_words_n: 50
-min_word_len: 3
+# Issue ranking Corpus A (Step 6)
+issue_ranking:
+  multi_label: true            # 1 tweet bisa hit > 1 isu
+
+# Top words Corpus A (Step 7)
+top_words:
+  n: 100
+
+# Sentimen lexicon Corpus B (Step 8)
+sentiment:
+  positive_threshold: 1        # score > 0 -> positif
+  negative_threshold: -1       # score < 0 -> negatif (else netral)
+
+# N-gram (Step 9)
+ngram:
+  bigram_top_n: 30
+  trigram_top_n: 30
+  min_df: 2
+
+# Co-occurrence (Step 10)
+cooccurrence:
+  auto_vocab_min_df: 3
+  auto_vocab_max_features: 20
+  pairs_top_n: 30
+
+# BERTopic (Step 11)
+bertopic:
+  language: "multilingual"
+  min_topic_size_small_corpus: 8     # untuk len(docs) < 300
+  min_topic_size_large_corpus: 10    # untuk len(docs) >= 300
+  small_corpus_threshold: 300
+  ngram_range: [1, 2]
+  vectorizer_min_df: 2
+  random_state: 42                   # untuk UMAP reproducibility
+  min_docs_required: 30              # di bawah ini -> abort BERTopic, run lainnya tetap jalan
+
+# Representative tweets per topic (Step 12)
+representative:
+  top_n_per_topic: 5
+  rep_score_formula: "like + 2*reply + 2*repost"
+
+# Manual review (Step 14)
+manual_review:
+  min_rows_recommended: 30           # peneliti diharapkan isi minimal 30 baris
 
 # Safety gate
-min_relevant_rows_for_report: 10   # di bawah ini, report.md akan warn "sampel terlalu kecil"
+safety:
+  min_corpus_b_for_full_run: 30      # di bawah ini, BERTopic di-skip + warning di report
+  min_corpus_a_for_issue_rank: 50    # di bawah ini, issue ranking ditandai "low confidence"
 
-# Dry-run gate (lihat DRYRUN.md)
+# Dry-run gate (Step 0)
 dryrun:
-  min_volume_per_pack: 15          # di bawah ini ditandai "thin"
-  abort_if_total_below: 30         # di bawah total ini, dry-run abort full run
-  large_pack_threshold: 5000       # di atas ini, pack WAJIB responseType="csv"
-  auto_run_before_full: true       # agent otomatis jalankan dry-run di Step 0
-
-# LLM model (untuk run_meta)
-llm_model_name: "claude-opus-4.7"   # ganti sesuai agent yg mengeksekusi
+  min_volume_per_pack: 15            # di bawah ini ditandai "thin"
+  abort_if_total_below: 30           # total semua pack di bawah ini -> abort full run
+  large_pack_threshold: 5000         # di atas ini, pack WAJIB responseType="csv"
+  auto_run_before_full: true         # agent otomatis jalankan dry-run di Step 0
