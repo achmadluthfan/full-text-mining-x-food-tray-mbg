@@ -1,5 +1,7 @@
 # MBG Food Tray — X Text Mining (Xpoz MCP × BERTopic)
 
+📊 **Manual Review Sheet (Google Sheets):** [11_tray_manual_review](https://docs.google.com/spreadsheets/d/1sYSsUQuixRdR9orTVQNXx9fQFQX-BHlyJSM-QIDXEL8/edit?usp=sharing)
+
 Pipeline text mining **X/Twitter** untuk penelitian skripsi
 "Redesign Food Tray MBG pada Sistem Distribusi SPPG".
 
