@@ -1,6 +1,3 @@
-[submodule "text-mining-x-food-tray-mbg"]
-	path = text-mining-x-food-tray-mbg
-	url = https://github.com/achmadluthfan/text-mining-x-food-tray-mbg.git
 [submodule "xpoz-agent-skills"]
 	path = xpoz-agent-skills
 	url = https://github.com/XPOZpublic/xpoz-agent-skills.git
