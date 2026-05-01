@@ -13,6 +13,13 @@ KEYWORDS = {
 DATE_START = "2025-08-01"
 DATE_END   = "2026-03-26"
 
+# Relevansi per keyword — tweet HARUS mengandung salah satu pola ini
+RELEVANCE_PATTERNS = {
+    "mbg":                r'\bmbg\b',
+    "makan bergizi gratis": r'makan bergizi gratis|\bmbg\b|bergizi gratis|makan bergizi',
+    "program mbg":        r'\bmbg\b',
+}
+
 def clean_text(t):
     t = str(t).lower()
     t = re.sub(r'http\S+|www\S+', '', t)
@@ -23,23 +30,31 @@ def clean_text(t):
     t = re.sub(r' +', ' ', t).strip()
     return t
 
-# --- Step 4: Load, tag, concat ---
+# --- Step 4: Load, tag, filter relevansi, concat ---
 frames = []
 raw_counts = {}
+relevant_counts = {}
 for fname, label in KEYWORDS.items():
     df = pd.read_csv(fname, dtype=str, encoding="utf-8", encoding_errors="replace")
     df.columns = df.columns.str.strip('"')
     df["query_used"] = label
     raw_counts[label] = len(df)
+
+    pattern = RELEVANCE_PATTERNS[label]
+    mask = df["text"].str.lower().str.contains(pattern, na=False, regex=True)
+    df = df[mask].reset_index(drop=True)
+    relevant_counts[label] = len(df)
+    print(f"[{label}] raw={raw_counts[label]} → setelah filter relevansi={relevant_counts[label]}")
     frames.append(df)
 
 raw_df = pd.concat(frames, ignore_index=True)
-total_raw = len(raw_df)
-print(f"Total raw (sebelum dedupe): {total_raw}")
+total_raw = sum(raw_counts.values())
+print(f"\nTotal raw gabungan       : {total_raw}")
+print(f"Total setelah relevansi  : {len(raw_df)}")
 
 # Dedupe by id
 raw_df = raw_df.drop_duplicates(subset=["id"]).reset_index(drop=True)
-print(f"Setelah dedupe: {len(raw_df)}")
+print(f"Setelah dedupe           : {len(raw_df)}")
 
 # Validasi tanggal
 raw_df["created_at_date"] = raw_df["created_at_date"].astype(str).str[:10]
@@ -47,7 +62,7 @@ raw_df = raw_df[
     (raw_df["created_at_date"] >= DATE_START) &
     (raw_df["created_at_date"] <= DATE_END)
 ].reset_index(drop=True)
-print(f"Setelah filter tanggal: {len(raw_df)}")
+print(f"Setelah filter tanggal   : {len(raw_df)}")
 total_cleaned = len(raw_df)
 
 # --- Step 5: Clean text ---
@@ -86,6 +101,7 @@ meta = {
     "total_raw":     total_raw,
     "total_cleaned": total_cleaned,
     "raw_per_keyword": raw_counts,
+    "relevant_per_keyword": relevant_counts,
     "xpoz_calls": [
         {"tool": "getTwitterPostsByKeywords", "keyword": label,
          "estimated_count": raw_counts[label], "response_type": "csv"}

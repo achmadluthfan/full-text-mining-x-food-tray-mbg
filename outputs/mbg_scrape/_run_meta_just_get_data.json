@@ -1,6 +1,6 @@
 {
-  "run_id": "2bc8b763-05b9-4f0c-9326-9a40ba00f00d",
-  "timestamp_utc": "2026-05-01T04:21:22.680147+00:00",
+  "run_id": "abfd09f3-8342-43cb-a3c5-8e50b195f4ee",
+  "timestamp_utc": "2026-05-01T06:48:41.116766+00:00",
   "window": {
     "start": "2025-08-01",
     "end": "2026-03-26"
@@ -11,11 +11,16 @@
     "program mbg"
   ],
   "total_raw": 13294,
-  "total_cleaned": 11357,
+  "total_cleaned": 1684,
   "raw_per_keyword": {
     "mbg": 1638,
     "makan bergizi gratis": 8927,
     "program mbg": 2729
+  },
+  "relevant_per_keyword": {
+    "mbg": 1638,
+    "makan bergizi gratis": 283,
+    "program mbg": 1638
   },
   "xpoz_calls": [
     {
