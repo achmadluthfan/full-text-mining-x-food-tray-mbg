@@ -1,0 +1,40 @@
+{
+  "run_id": "2bc8b763-05b9-4f0c-9326-9a40ba00f00d",
+  "timestamp_utc": "2026-05-01T04:21:22.680147+00:00",
+  "window": {
+    "start": "2025-08-01",
+    "end": "2026-03-26"
+  },
+  "keywords": [
+    "mbg",
+    "makan bergizi gratis",
+    "program mbg"
+  ],
+  "total_raw": 13294,
+  "total_cleaned": 11357,
+  "raw_per_keyword": {
+    "mbg": 1638,
+    "makan bergizi gratis": 8927,
+    "program mbg": 2729
+  },
+  "xpoz_calls": [
+    {
+      "tool": "getTwitterPostsByKeywords",
+      "keyword": "mbg",
+      "estimated_count": 1638,
+      "response_type": "csv"
+    },
+    {
+      "tool": "getTwitterPostsByKeywords",
+      "keyword": "makan bergizi gratis",
+      "estimated_count": 8927,
+      "response_type": "csv"
+    },
+    {
+      "tool": "getTwitterPostsByKeywords",
+      "keyword": "program mbg",
+      "estimated_count": 2729,
+      "response_type": "csv"
+    }
+  ]
+}

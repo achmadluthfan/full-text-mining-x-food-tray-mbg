@@ -2,10 +2,16 @@
 # Workflow BERTopic: tidak ada parameter LLM, semua deterministik.
 
 # Time window — FIXED RANGE (bukan rolling)
-# Data yang dibutuhkan: Agustus 2025 – Oktober 2025
+# Periode laporan utama: Agustus 2025 – 26 Maret 2026
 date_window:
   start: "2025-08-01"
-  end:   "2025-10-31"
+  end:   "2026-03-26"
+
+# Rentang incremental (gap-only fetch) untuk melanjutkan data setelah cutoff sebelumnya.
+# Dipakai scripts/node_xpoz/fetch_mbg_gap.cjs (default: dari 2025-11-01 sampai date_window.end)
+gap_fetch:
+  start: "2025-11-01"
+  end:   "2026-03-26"
 
 # Fetching xpoz (Step 3-4)
 fetching:
